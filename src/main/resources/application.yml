@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: fake-store-gateway
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:public.pem
+
+
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-service
+              uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/auth/**
+              filters:
+                - RemoveRequestHeader=Authorization
+              metadata:
+                sensitiveHeaders: [ ]
+
+            - id: user-endpoints
+              uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/users/**
+
+
+server:
+  port: ${PORT:8080}
+
+
