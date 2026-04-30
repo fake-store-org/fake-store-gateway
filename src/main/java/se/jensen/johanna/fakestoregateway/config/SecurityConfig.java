@@ -31,6 +31,7 @@ public class SecurityConfig {
         .authorizeExchange(auth -> auth
             .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .pathMatchers("/api/auth/**").permitAll()
+            .pathMatchers("/api/products/**").permitAll()
             .anyExchange().authenticated()
         )
         .oauth2ResourceServer(oauth2 -> oauth2
