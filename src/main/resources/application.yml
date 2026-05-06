@@ -20,9 +20,9 @@ spring:
               predicates:
                 - Path=/api/auth/**
               filters:
-                - RemoveRequestHeader=Authorization
-              metadata:
-                sensitiveHeaders: [ ]
+                - PreserveHostHeader
+                - DedupeResponseHeader=Set-Cookie
+
 
             - id: user-endpoints
               uri: ${AUTH_SERVICE_URL:http://localhost:8081}
@@ -39,8 +39,15 @@ spring:
               predicates:
                 - Path=/api/orders/**
 
+            - id: inventory-service-reservations
+              uri: ${INVENTORY_SERVICE_URL:http://localhost:8084}
+              predicates:
+                - Path=/api/reservations/**
+
 
 server:
   port: ${PORT:8080}
+  forward-headers-strategy: framework
+
 
 
