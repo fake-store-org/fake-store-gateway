@@ -10,7 +10,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
@@ -29,11 +28,11 @@ public class SecurityConfig {
         .csrf(csrf -> csrf.disable())
         .cors(
             cors -> cors.configurationSource(corsConfigurationSource()))
-        .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
         .authorizeExchange(auth -> auth
             .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .pathMatchers("/api/auth/**").permitAll()
             .pathMatchers("/api/products/**").permitAll()
+            .pathMatchers("/api/reservations/check-stock").permitAll()
             .anyExchange().authenticated()
         )
         .oauth2ResourceServer(oauth2 -> oauth2
@@ -47,11 +46,7 @@ public class SecurityConfig {
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowCredentials(true);
     config.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
-    config.setAllowedHeaders(Arrays.asList("Authorization",
-        "Content-Type",
-        "Accept",
-        "x-requested-with",
-        "Cache-Control", "Origin"));
+    config.setAllowedHeaders(List.of("*"));
     config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
     config.setExposedHeaders(List.of("Set-Cookie"));
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
