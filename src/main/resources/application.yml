@@ -43,6 +43,7 @@ spring:
               uri: ${INVENTORY_SERVICE_URL:http://localhost:8084}
               predicates:
                 - Path=/api/reservations/**
+                - Method=GET
 
 
 server:
