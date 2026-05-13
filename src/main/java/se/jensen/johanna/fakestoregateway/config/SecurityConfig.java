@@ -33,6 +33,7 @@ public class SecurityConfig {
             .pathMatchers("/api/auth/**").permitAll()
             .pathMatchers("/api/products/**").permitAll()
             .pathMatchers("/api/reservations/check-stock").permitAll()
+            .pathMatchers("/api/orders/webhook").permitAll()
             .anyExchange().authenticated()
         )
         .oauth2ResourceServer(oauth2 -> oauth2
