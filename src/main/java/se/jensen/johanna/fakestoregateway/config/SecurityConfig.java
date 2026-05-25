@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity.CsrfSpec;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
@@ -25,15 +26,15 @@ public class SecurityConfig {
   @Bean
   public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
     return http
-        .csrf(csrf -> csrf.disable())
+        .csrf(CsrfSpec::disable)
         .cors(
             cors -> cors.configurationSource(corsConfigurationSource()))
         .authorizeExchange(auth -> auth
             .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .pathMatchers("/actuator/health").permitAll()
             .pathMatchers("/api/auth/**").permitAll()
-            .pathMatchers("/api/products/**").permitAll()
+            .pathMatchers(HttpMethod.GET, "/api/products/**").permitAll()
             .pathMatchers("/api/reservations/check-stock").permitAll()
-            .pathMatchers("/api/orders/webhook").permitAll()
             .anyExchange().authenticated()
         )
         .oauth2ResourceServer(oauth2 -> oauth2
