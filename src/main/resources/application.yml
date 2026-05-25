@@ -8,8 +8,6 @@ spring:
         jwt:
           public-key-location: classpath:public.pem
 
-
-
   cloud:
     gateway:
       server:
@@ -42,7 +40,8 @@ spring:
             - id: inventory-service-reservations
               uri: ${INVENTORY_SERVICE_URL:http://localhost:8084}
               predicates:
-                - Path=/api/reservations/**
+                - Path=/api/reservations/check-stock
+
 
 
 server:
