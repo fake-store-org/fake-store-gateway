@@ -31,8 +31,9 @@ public class SecurityConfig {
             cors -> cors.configurationSource(corsConfigurationSource()))
         .authorizeExchange(auth -> auth
             .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .pathMatchers("/actuator/health").permitAll()
             .pathMatchers("/api/auth/**").permitAll()
-            .pathMatchers("/api/products/**").permitAll()
+            .pathMatchers(HttpMethod.GET, "/api/products/**").permitAll()
             .pathMatchers("/api/reservations/check-stock").permitAll()
             .anyExchange().authenticated()
         )
