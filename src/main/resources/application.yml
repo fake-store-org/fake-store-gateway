@@ -37,16 +37,21 @@ spring:
               predicates:
                 - Path=/api/orders/**
 
-            - id: inventory-service-reservations
+            - id: inventory-service
               uri: ${INVENTORY_SERVICE_URL:http://localhost:8084}
               predicates:
-                - Path=/api/reservations/check-stock
+                - Path=/api/inventory/**
 
 
 
 server:
   port: ${PORT:8080}
   forward-headers-strategy: framework
+
+logging:
+  level:
+    org.springframework.security.web.server.authorization.AuthorizationWebFilter: TRACE
+    org.springframework.security.web.server.util.matcher: TRACE
 
 
 
