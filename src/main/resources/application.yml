@@ -6,8 +6,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          public-key-location: classpath:public.pem
-
+          jwk-set-uri: ${AUTH_PUBLIC_JWT_URL:http://auth:8081/api/internal/auth/.well-known/jwks.json}
   cloud:
     gateway:
       server:
