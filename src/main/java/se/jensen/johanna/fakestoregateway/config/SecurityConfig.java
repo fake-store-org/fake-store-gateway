@@ -34,7 +34,7 @@ public class SecurityConfig {
             .pathMatchers("/actuator/health").permitAll()
             .pathMatchers("/api/auth/**").permitAll()
             .pathMatchers(HttpMethod.GET, "/api/products/**").permitAll()
-            .pathMatchers(HttpMethod.POST, "/api/inventory/check-stock").permitAll()
+            .pathMatchers(HttpMethod.POST, "/api/inventory/**").permitAll()
             .anyExchange().authenticated()
         )
         .oauth2ResourceServer(oauth2 -> oauth2

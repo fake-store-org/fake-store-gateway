@@ -47,4 +47,4 @@ jobs:
           aws ssm send-command \
             --instance-ids ${{ secrets.EC2_INSTANCE_ID }} \
             --document-name "AWS-RunShellScript" \
-            --parameters commands=["su - ec2-user -c 'docker service update --image 253068980227.dkr.ecr.eu-north-1.amazonaws.com/gateway:latest --with-registry-auth --force fakestore_gateway'"]
+            --parameters commands=["bash /home/ec2-user/fakestore/deploy.sh"]
